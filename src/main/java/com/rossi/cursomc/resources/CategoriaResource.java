@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.rossi.cursomc.model.Categoria;
+import com.rossi.cursomc.service.CategoriaService;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,23 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/categorias")
 public class CategoriaResource {
 
-    @GetMapping
+    @Autowired
+    private CategoriaService service;
+
+    @GetMapping(value = "/{id}")
     // Outra forma de fazer
     // @RequestMapping(method = RequestMethod.GET)
-    public List<Categoria> listar() {
-
-        Categoria cat1 = new Categoria();
-        cat1.setId(1);
-        cat1.setNome("Categoria 1");
-        Categoria cat2 = new Categoria();
-        cat2.setId(2);
-        cat2.setNome("Categoria 2");
-
-        List<Categoria> lista = new ArrayList<>();
-        lista.add(cat1);
-        lista.add(cat2);
-
-
-        return lista;
+    public ResponseEntity<?> find(@PathVariable Integer id) {
+        Categoria obj = service.buscar(id);
+        return ResponseEntity.ok().body(obj);
     }
 }
