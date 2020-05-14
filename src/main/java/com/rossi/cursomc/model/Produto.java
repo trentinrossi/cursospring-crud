@@ -8,13 +8,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 import lombok.Data;
 
 @Data
-@Entity // Esta anotação que faz com que a tabela seja criada no banco de dados
-public class Categoria implements Serializable {
+@Entity
+public class Produto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -22,9 +24,13 @@ public class Categoria implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
+    private Double preco;
 
-    // Uma categoria possui vários produtos, por isso essa lista
-    @ManyToMany(mappedBy = "categorias") // Como já foi feito todo o relacionamento lá na classe Produto, então aqui
-                                         // somente informo o nome do atributo ao qual foi feito o relacionamento lá
-    private List<Produto> produtos = new ArrayList<>();
+    // Produto tem várias categorias
+    @ManyToMany
+    @JoinTable(name = "PRODUTO_CATEGORIA", // Nome da tabela intermediária
+        joinColumns = @JoinColumn(name = "produto_id"), 
+        inverseJoinColumns = @JoinColumn(name = "categoria_id"))
+    private List<Categoria> categorias = new ArrayList<>();
+
 }
