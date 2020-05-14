@@ -51,6 +51,7 @@ public class DemoApplication implements CommandLineRunner {
 		p2.getCategorias().addAll(Arrays.asList(cat1, cat2));
 		p3.getCategorias().addAll(Arrays.asList(cat1));
 
+		// Salvando no banco Categorias e Produtos
 		repoCategoria.saveAll(Arrays.asList(cat1, cat2));
 		repoProduto.saveAll(Arrays.asList(p1, p2, p3));
 	}

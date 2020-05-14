@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Data;
 
 @Data
@@ -23,8 +25,7 @@ public class Categoria implements Serializable {
     private Integer id;
     private String nome;
 
-    // Uma categoria possui vários produtos, por isso essa lista
-    @ManyToMany(mappedBy = "categorias") // Como já foi feito todo o relacionamento lá na classe Produto, então aqui
-                                         // somente informo o nome do atributo ao qual foi feito o relacionamento lá
+    @JsonManagedReference // Necessário senao a resposta da lista será cíclica, fazer essa anotação do lado onde queremos que venham os objetos associados
+    @ManyToMany(mappedBy = "categorias") // Uma categoria possui vários produtos, por isso essa lista Como já foi feito todo o relacionamento lá na classe Produto, então aqui somente informo o nome do atributo ao qual foi feito o relacionamento lá
     private List<Produto> produtos = new ArrayList<>();
 }

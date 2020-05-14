@@ -21,10 +21,11 @@ public class CategoriaResource {
     private CategoriaService service;
 
     @GetMapping(value = "/{id}")
-    // Outra forma de fazer
-    // @RequestMapping(method = RequestMethod.GET)
+    // Outra forma de fazer a anotação = @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> find(@PathVariable Integer id) {
-        Categoria obj = service.buscar(id);
+        // Aqui dentro do Service existe um tratamento de erro, caso este não ocorra, será executada a linha abaixo 'return', senão o return abaixo não vai ocorrer
+        Categoria obj = service.buscar(id); 
+
         return ResponseEntity.ok().body(obj);
     }
 }
