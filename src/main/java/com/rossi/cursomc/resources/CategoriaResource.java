@@ -1,8 +1,5 @@
 package com.rossi.cursomc.resources;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.rossi.cursomc.model.Categoria;
 import com.rossi.cursomc.service.CategoriaService;
 
