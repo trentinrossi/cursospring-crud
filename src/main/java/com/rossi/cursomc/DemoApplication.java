@@ -3,8 +3,12 @@ package com.rossi.cursomc;
 import java.util.Arrays;
 
 import com.rossi.cursomc.model.Categoria;
+import com.rossi.cursomc.model.Cidade;
+import com.rossi.cursomc.model.Estado;
 import com.rossi.cursomc.model.Produto;
 import com.rossi.cursomc.repository.CategoriaRepository;
+import com.rossi.cursomc.repository.CidadeRepository;
+import com.rossi.cursomc.repository.EstadoRepository;
 import com.rossi.cursomc.repository.ProdutoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +21,15 @@ public class DemoApplication implements CommandLineRunner {
 
 	@Autowired
 	private CategoriaRepository repoCategoria;
+
 	@Autowired
 	private ProdutoRepository repoProduto;
+
+	@Autowired
+	private EstadoRepository repoEstado;
+
+	@Autowired
+	private CidadeRepository repoCidade;
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
@@ -26,6 +37,7 @@ public class DemoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		// ############################################################
 		// Categorias
 		Categoria cat1 = new Categoria();
 		Categoria cat2 = new Categoria();
@@ -54,6 +66,27 @@ public class DemoApplication implements CommandLineRunner {
 		// Salvando no banco Categorias e Produtos
 		repoCategoria.saveAll(Arrays.asList(cat1, cat2));
 		repoProduto.saveAll(Arrays.asList(p1, p2, p3));
+		// ############################################################
+
+		// ############################################################
+		// Estados e Cidades
+		Estado est1 = new Estado();
+		Estado est2 = new Estado();
+		est1.setNome("Minas Gerais");
+		est2.setNome("São Paulo");
+
+		Cidade c1 = new Cidade();
+		Cidade c2 = new Cidade();
+		Cidade c3 = new Cidade();
+		c1.setNome("Uberlândia");
+		c1.setEstado(est1);
+		c2.setNome("São Paulo");
+		c2.setEstado(est2);
+		c3.setNome("Campinas");
+		c3.setEstado(est2);
+
+		repoEstado.saveAll(Arrays.asList(est1, est2));
+		repoCidade.saveAll(Arrays.asList(c1, c2, c3));
 	}
 
 }
