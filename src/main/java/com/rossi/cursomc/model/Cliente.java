@@ -14,11 +14,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.rossi.cursomc.model.enums.TipoCliente;
 
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @EqualsAndHashCode
+@NoArgsConstructor
 @Entity
 public class Cliente implements Serializable {
 
@@ -33,6 +36,7 @@ public class Cliente implements Serializable {
     // private TipoCliente tipo;
     private Integer tipo; // Macete para Guardar no BD como INT
 
+    @JsonManagedReference // Cliente pode retornar a lista de endereços ligados a ele
     @OneToMany(mappedBy = "cliente")
     private List<Endereco> enderecos = new ArrayList<>();
 
@@ -40,9 +44,6 @@ public class Cliente implements Serializable {
     @ElementCollection
     @CollectionTable(name = "TELEFONE") // nome da tabela que eu quero criar no BD
     private Set<String> telefones = new HashSet<>();
-
-    public Cliente() {
-    }
 
     public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
         super();
