@@ -45,6 +45,9 @@ public class Cliente implements Serializable {
     @CollectionTable(name = "TELEFONE") // nome da tabela que eu quero criar no BD
     private Set<String> telefones = new HashSet<>();
 
+    @OneToMany(mappedBy = "cliente")    
+    private List<Pedido> pedidos = new ArrayList<>();
+
     public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
         super();
         this.id = id;
@@ -108,6 +111,14 @@ public class Cliente implements Serializable {
 
     public void setTelefones(Set<String> telefones) {
         this.telefones = telefones;
+    }
+
+    public List<Pedido> getPedidos() {
+        return this.pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
     }
 
 }
