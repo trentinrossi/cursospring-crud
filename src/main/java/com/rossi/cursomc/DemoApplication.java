@@ -8,6 +8,7 @@ import com.rossi.cursomc.model.Cidade;
 import com.rossi.cursomc.model.Cliente;
 import com.rossi.cursomc.model.Endereco;
 import com.rossi.cursomc.model.Estado;
+import com.rossi.cursomc.model.ItemPedido;
 import com.rossi.cursomc.model.Pagamento;
 import com.rossi.cursomc.model.PagamentoComBoleto;
 import com.rossi.cursomc.model.PagamentoComCartao;
@@ -20,6 +21,7 @@ import com.rossi.cursomc.repository.CidadeRepository;
 import com.rossi.cursomc.repository.ClienteRepository;
 import com.rossi.cursomc.repository.EnderecoRepository;
 import com.rossi.cursomc.repository.EstadoRepository;
+import com.rossi.cursomc.repository.ItemPedidoRepository;
 import com.rossi.cursomc.repository.PagamentoRepository;
 import com.rossi.cursomc.repository.PedidoRepository;
 import com.rossi.cursomc.repository.ProdutoRepository;
@@ -55,6 +57,9 @@ public class DemoApplication implements CommandLineRunner {
 
 	@Autowired
 	private PagamentoRepository repoPagamento;
+
+	@Autowired
+	private ItemPedidoRepository repoItemPedido;
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
@@ -125,7 +130,7 @@ public class DemoApplication implements CommandLineRunner {
 		repoCliente.saveAll(Arrays.asList(cli1));
 		repoEndereco.saveAll(Arrays.asList(e1, e2));
 
-		// ###
+		// ##############################################################
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
 		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
@@ -141,6 +146,20 @@ public class DemoApplication implements CommandLineRunner {
 
 		repoPedido.saveAll(Arrays.asList(ped1, ped2));
 		repoPagamento.saveAll(Arrays.asList(pagto1, pagto2));
+
+		// ##############################################################
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+
+		repoItemPedido.saveAll(Arrays.asList(ip1, ip2, ip3));	
 	}
 
 }

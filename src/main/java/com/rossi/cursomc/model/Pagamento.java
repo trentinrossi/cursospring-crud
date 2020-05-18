@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rossi.cursomc.model.enums.EstadoPagamento;
 
 import lombok.EqualsAndHashCode;
@@ -28,18 +29,20 @@ public abstract class Pagamento implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    private Integer id; // o ID sempre deve ser o mesmo ID do Pedido, por isso a anotação abaixo sobre o atributo pedido
-    private EstadoPagamento estado;
+    private Integer id; // o ID sempre deve ser o mesmo ID do Pedido, por isso a anotação abaixo sobre o
+                        // atributo pedido
+    private Integer estado;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "pedido_id")
-    @MapsId // Aqui eu digo que será o mesmo ID
+    @MapsId // Aqui eu digo que será o mesmo ID do pedido
     private Pedido pedido;
 
     public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido) {
         super();
         this.id = id;
-        this.estado = estado;
+        this.estado = estado.getCod();
         this.pedido = pedido;
     }
 

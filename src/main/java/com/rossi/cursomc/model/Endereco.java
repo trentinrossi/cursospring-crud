@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -43,7 +43,7 @@ public class Endereco implements Serializable {
         this.setCidade(cidade);
     }
 
-    @JsonBackReference // Endereço não pode trazer os clientes atrelados a ele
+    @JsonIgnore // Endereço não pode trazer os clientes atrelados a ele
     @ManyToOne
     @JoinColumn(name = "cliente_id") // Nome do campo a ser criado no banco
     private Cliente cliente;
