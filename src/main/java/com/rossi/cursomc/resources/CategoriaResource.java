@@ -35,7 +35,11 @@ public class CategoriaResource {
     @PostMapping
     public ResponseEntity<Void> insert(@RequestBody Categoria obj) {
         obj = service.inserir(obj);
+
+        // Faz com que seja retornado no Location da resposta a URL para que se possa navegar até a nova categoria criada
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+        
+        // Created retorna o status 201 colocando o corpo da resposta vazio
         return ResponseEntity.created(uri).build();
     }
 }
