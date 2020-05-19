@@ -7,6 +7,7 @@ import com.rossi.cursomc.service.CategoriaService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,5 +52,15 @@ public class CategoriaResource {
         obj = service.update(obj);
         
         return ResponseEntity.noContent().build();
-    }    
+    }
+    
+    @DeleteMapping(value = "/{id}")
+    // Outra forma de fazer a anotação = @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<Categoria> delete(@PathVariable Integer id) {
+        // Aqui dentro do Service existe um tratamento de erro, caso este não ocorra, será executada a linha abaixo 'return', senão o return abaixo não vai ocorrer
+        service.delete(id); 
+
+        return ResponseEntity.noContent().build();
+    }
+    
 }
