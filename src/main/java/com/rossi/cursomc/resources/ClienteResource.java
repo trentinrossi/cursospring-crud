@@ -19,9 +19,9 @@ public class ClienteResource {
 
     @GetMapping(value = "/{id}")
     // Outra forma de fazer a anotação = @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> find(@PathVariable Integer id) {
+    public ResponseEntity<Cliente> find(@PathVariable Integer id) {
         // Aqui dentro do Service existe um tratamento de erro, caso este não ocorra, será executada a linha abaixo 'return', senão o return abaixo não vai ocorrer
-        Cliente obj = service.buscar(id); 
+        Cliente obj = service.find(id); 
 
         return ResponseEntity.ok().body(obj);
     }

@@ -15,7 +15,7 @@ public class CategoriaService {
     @Autowired
     private CategoriaRepository repository;
 
-    public Categoria buscar(Integer id) {
+    public Categoria find(Integer id) {
         Optional<Categoria> cat = repository.findById(id);
 
         /*
@@ -35,6 +35,11 @@ public class CategoriaService {
         // Estou setando aqui como nulo para garantir que será inserida uma nova categoria
         // Caso a categoria seja passada com algum id, então este método save vai atualizar ela ao inves de inserir
         obj.setId(null); 
+        return repository.save(obj);
+    }
+
+    public Categoria update(Categoria obj) {
+        find(obj.getId());
         return repository.save(obj);
     }
 }

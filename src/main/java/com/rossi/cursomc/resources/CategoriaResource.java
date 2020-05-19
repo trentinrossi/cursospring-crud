@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 @RequestMapping(value = "/categorias")
@@ -24,9 +26,9 @@ public class CategoriaResource {
 
     @GetMapping(value = "/{id}")
     // Outra forma de fazer a anotação = @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> find(@PathVariable Integer id) {
+    public ResponseEntity<Categoria> find(@PathVariable Integer id) {
         // Aqui dentro do Service existe um tratamento de erro, caso este não ocorra, será executada a linha abaixo 'return', senão o return abaixo não vai ocorrer
-        Categoria obj = service.buscar(id); 
+        Categoria obj = service.find(id); 
 
         return ResponseEntity.ok().body(obj);
     }
@@ -42,4 +44,12 @@ public class CategoriaResource {
         // Created retorna o status 201 colocando o corpo da resposta vazio
         return ResponseEntity.created(uri).build();
     }
+
+    @PutMapping(value="/{id}")
+    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody Categoria obj) {
+        obj.setId(id);
+        obj = service.update(obj);
+        
+        return ResponseEntity.noContent().build();
+    }    
 }
