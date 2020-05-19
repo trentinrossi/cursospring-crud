@@ -1,8 +1,12 @@
 package com.rossi.cursomc.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import com.rossi.cursomc.model.Categoria;
+import com.rossi.cursomc.model.dto.CategoriaDTO;
 import com.rossi.cursomc.service.CategoriaService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +28,17 @@ public class CategoriaResource {
 
     @Autowired
     private CategoriaService service;
+
+    // Retorna uma CategoriaDTO onde contem somente o id e nome
+    @GetMapping
+    public ResponseEntity<List<CategoriaDTO>> findAll() {
+        List<Categoria> list = service.findAll();
+
+        // Transformo as categorias recuperadas do BD em categorias DTO        
+        List<CategoriaDTO> listDto = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+        
+        return ResponseEntity.ok().body(listDto);
+    }
 
     @GetMapping(value = "/{id}")
     // Outra forma de fazer a anotação = @RequestMapping(method = RequestMethod.GET)

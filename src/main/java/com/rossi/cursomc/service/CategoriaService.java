@@ -1,5 +1,6 @@
 package com.rossi.cursomc.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.rossi.cursomc.model.Categoria;
@@ -16,6 +17,10 @@ public class CategoriaService {
 
     @Autowired
     private CategoriaRepository repository;
+
+    public List<Categoria> findAll() {
+        return repository.findAll();
+    }
 
     public Categoria find(Integer id) {
         Optional<Categoria> cat = repository.findById(id);
