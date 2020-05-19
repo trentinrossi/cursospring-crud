@@ -30,4 +30,11 @@ public class CategoriaService {
         // Isso vai fazer com que a classe ResourceExceptionHandler seja executada, retornando o erro 404 para o cliente                        
         return cat.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
     }
+
+    public Categoria inserir(Categoria obj) {
+        // Estou setando aqui como nulo para garantir que será inserida uma nova categoria
+        // Caso a categoria seja passada com algum id, então este método save vai atualizar ela ao inves de inserir
+        obj.setId(null); 
+        return repository.save(obj);
+    }
 }
