@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import com.rossi.cursomc.model.Categoria;
 import com.rossi.cursomc.model.dto.CategoriaDTO;
 import com.rossi.cursomc.service.CategoriaService;
@@ -51,8 +53,11 @@ public class CategoriaResource {
     }
 
     // RequestBody faz com que o objeto seja convertido para JSON automaticamente
+    // @Valid vai validar as anotações que estão sobre os atributos da CategoriaDTO
     @PostMapping
-    public ResponseEntity<Void> insert(@RequestBody Categoria obj) {
+    public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto) {
+        // https://www.udemy.com/course/spring-boot-ionic/learn/lecture/8186078#overview
+        Categoria obj = service.fromDTO(objDto);
         obj = service.inserir(obj);
 
         // Faz com que seja retornado no Location da resposta a URL para que se possa navegar até a nova categoria criada
@@ -63,7 +68,8 @@ public class CategoriaResource {
     }
 
     @PutMapping(value="/{id}")
-    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody Categoria obj) {
+    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody CategoriaDTO objDto) {
+        Categoria obj = service.fromDTO(objDto);
         obj.setId(id);
         obj = service.update(obj);
         

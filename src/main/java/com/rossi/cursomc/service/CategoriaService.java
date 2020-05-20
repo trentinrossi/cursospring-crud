@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.rossi.cursomc.model.Categoria;
+import com.rossi.cursomc.model.dto.CategoriaDTO;
 import com.rossi.cursomc.repository.CategoriaRepository;
 import com.rossi.cursomc.service.exceptions.DataIntegrityException;
 import com.rossi.cursomc.service.exceptions.ObjectNotFoundException;
@@ -65,5 +66,10 @@ public class CategoriaService {
     public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repository.findAll(pageRequest);
-	}
+    }
+    
+    // Método auxiliar para converter um objeto DTO para um objeto de instanciação
+    public Categoria fromDTO(CategoriaDTO objDto) {
+        return new Categoria(objDto.getId(), objDto.getNome());
+    }
 }
